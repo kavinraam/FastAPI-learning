@@ -1,5 +1,9 @@
 from fastapi import FastAPI
 from models import Product
+from database import session, engine
+import db_models
+
+db_models.Base.metadata.create_all(bind= engine)
 
 app = FastAPI()
 
@@ -14,6 +18,9 @@ def greet():
 
 @app.get("/products")
 def get_all_products():
+    #DB connection
+    db = session()
+    db.query()
     return products
 
 @app.get("/product/{id}")
@@ -47,3 +54,5 @@ def delete_product(id: int):
             return "Product deleted successfully!"
 
     return "Product not found!"
+
+
